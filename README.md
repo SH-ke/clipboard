@@ -10,12 +10,15 @@
 
 ```json
 {
-    'clipboard': '二进制文件 密文文件', 
-    'clipboard.priv.txt': '明文文本 在 .gitignore 中忽略', 
-    '.gitignore': '暂定忽略 venv, *.priv*', 
-    'stamp_xxxxxx.priv': '空文件 文件名为加密密钥', 
-    'venv': 'python 虚拟环境 ignore', 
-    'CipherCylinder.py': '密码筒 py 文件 用于加密解密', 
+    "venv": "python 虚拟环境 ignore", 
+    ".gitignore": "暂定忽略 venv, *.priv*", 
+    "clipboard": "二进制文件 密文文件", 
+    "clipboard.priv.txt": "明文文本 在 .gitignore 中忽略之", 
+    "stamp_xxxxxx.priv": "空文件 文件名为加密密钥", 
+    
+    "CipherCylinder.py": "密码筒 py 文件 用于加密解密", 
+    "dec.py": "解密命令 py 文件 用于文件解码", 
+    "enc.py": "加密命令 py 文件 用于文件解密", 
 }
 ```
 

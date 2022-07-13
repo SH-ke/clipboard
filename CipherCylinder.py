@@ -1,8 +1,8 @@
 import os
 import time
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-from base64 import b64encode
+from Crypto.Util.Padding import pad, unpad
+from base64 import b64encode, b64decode
 
 class EncodingBash:
     def __init__(self) -> None:
@@ -42,6 +42,10 @@ class CipherCylinder:
         pass
 
 
+    # encode: str -> decode -> byte -> pad - > encrypt
+    # -> bs64encode -> str utf
+    # decode: enc -> decode -> byte -> bs64decode
+    # -> decrypt -> unpad -> decode -> str
     def __enc__(self, text: str, stamp: str) -> str:
         iv = "0102030405060708"  # 偏移量
 
@@ -53,4 +57,10 @@ class CipherCylinder:
 
 
     def __dec__(self, enc: str, stamp: str) -> str:
-        pass
+        iv = "0102030405060708"  # 偏移量
+
+        aes = AES.new(
+            key=stamp.encode("utf-8"), IV=iv.encode("utf-8"), mode=AES.MODE_CBC
+        )  # 创建加密器
+        text = aes.decrypt(b64decode( enc.encode() )) # 解密
+        return unpad(text, AES.block_size).decode()
