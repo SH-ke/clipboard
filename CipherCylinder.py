@@ -15,26 +15,40 @@ class EncodingBash:
 
         print(text)
         print("Waiting... 获取密钥")
-        self.get_stamp()
+        key = self.get_stamp()
         print("Waiting... 加密文件")
+        cc = CipherCylinder()
+        enc = cc.__enc__(text, key)
+        print(enc)
         print("Waiting... 保存文件")
+        with open("clipboard", 'w') as f:
+            f.write(enc)
 
     
     def decoding(self):
         print("Waiting... 读取密文")
+        with open("clipboard", 'r', encoding='utf') as f:
+            enc = ''.join( f.readlines() )
+
         print("Waiting... 控制台获取密钥")
+        key = input("请输入密钥 Please input passkey: ")
         print("Waiting... 解码")
+        cc = CipherCylinder()
+        text = cc.__dec__(enc, key*4)
         print("Waiting... 输出明文")
+        print(f"{'='*50}\n\n{text}\n\n{'='*50}")
 
 
-    def get_stamp(self):
+    def get_stamp(self) -> str:
         print("Waiting... 删除目录下的 stamp_*.priv 文件")
         os.system("del stamp_*.priv")
         print("Waiting... 随机生成6位密钥")
-        stamp = str( time.time() )[-6:]
+        stamp = str( time.time() )[-4:]
         print(stamp)
         print("Waiting... 保存密钥 stamp_xxxxxx.priv")
-        os.system(f"echo > stamp_{stamp}.priv")
+        os.system(f"echo $null > stamp_{stamp}.priv")
+
+        return stamp * 4
 
 
 class CipherCylinder:

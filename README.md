@@ -15,10 +15,14 @@
     "clipboard": "二进制文件 密文文件", 
     "clipboard.priv.txt": "明文文本 在 .gitignore 中忽略之", 
     "stamp_xxxxxx.priv": "空文件 文件名为加密密钥", 
+    "stamps_priv.json": "json 文件 保存历史加密密钥", 
+    "venv.txt": "python 虚拟环境依赖", 
     
     "CipherCylinder.py": "密码筒 py 文件 用于加密解密", 
     "dec.py": "解密命令 py 文件 用于文件解码", 
     "enc.py": "加密命令 py 文件 用于文件解密", 
+    "dec.bat": "解密命令 bat 文件 加密 clipboard.priv.txt 并提交 git 至远程 repo", 
+    "enc.bat": "加密命令 bat 文件 用于文件解密", 
 }
 ```
 
