@@ -8,7 +8,7 @@ class EncodingBash:
     def __init__(self) -> None:
         pass
 
-    def encoding(self):
+    def encoding(self) -> str:
         print("Waiting... 读取文件")
         with open("clipboard.priv.txt", 'r', encoding='utf') as f:
             text = ''.join( f.readlines() )
@@ -23,9 +23,11 @@ class EncodingBash:
         print("Waiting... 保存文件")
         with open("clipboard", 'w') as f:
             f.write(enc)
+        
+        return enc
 
     
-    def decoding(self):
+    def decoding(self) -> str:
         print("Waiting... 读取密文")
         with open("clipboard", 'r', encoding='utf') as f:
             enc = ''.join( f.readlines() )
@@ -37,6 +39,17 @@ class EncodingBash:
         text = cc.__dec__(enc, key*4)
         print("Waiting... 输出明文")
         print(f"{'='*50}\n\n{text}\n\n{'='*50}")
+
+        return text
+
+    
+    def board_update(self) -> None:
+        text = self.decoding()
+        if text == "Error":
+            print("更新失败")
+            return
+        with open("clipboard.priv.txt", 'w', encoding='utf') as f:
+            f.write(text)
 
 
     def get_stamp(self) -> str:
@@ -76,5 +89,12 @@ class CipherCylinder:
         aes = AES.new(
             key=stamp.encode("utf-8"), IV=iv.encode("utf-8"), mode=AES.MODE_CBC
         )  # 创建加密器
-        text = aes.decrypt(b64decode( enc.encode() )) # 解密
-        return unpad(text, AES.block_size).decode()
+        text_byte = aes.decrypt(b64decode( enc.encode() )) # 解密
+        # 异常捕获，解密失败
+        try:
+            text = unpad(text_byte, AES.block_size).decode()
+        except UnicodeDecodeError:
+            print("密钥错误，解码失败")
+            text = "Error"
+
+        return text
